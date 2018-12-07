@@ -1,7 +1,9 @@
 package sample;
 
 import com.sun.webkit.dom.HTMLElementImpl;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,14 +16,18 @@ import org.w3c.dom.Node;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathException;
 import javax.xml.xpath.XPathFactory;
+import java.io.FileInputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     public WebView webContent;
     public TextField textField;
+    public Button configButton;
     private Stage primaryStage;
+    Properties properties;
 
     public void onKeyPressed(KeyEvent keyEvent) {
         if(keyEvent.getCode() == KeyCode.ENTER) {
@@ -32,6 +38,7 @@ public class MainController implements Initializable {
     }
 
     private String getUrl() {
+        //return "https://dict.laban.vn/find?type=1&query=" + URLEncoder.encode(textField.getText());
         return "https://translate.google.com/#auto/vi/" + URLEncoder.encode(textField.getText());
     }
 
@@ -39,6 +46,12 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         webContent.getEngine().getLoadWorker().progressProperty().addListener(
                 (o, old, progress) -> updateFields(progress));
+
+        loadConfig();
+    }
+
+    private void loadConfig() {
+        properties.load(new FileInputStream(""));
     }
 
     private void updateFields(Number progress)
@@ -78,5 +91,13 @@ public class MainController implements Initializable {
         System.out.println("open url: " + url);
         webContent.getEngine().load(url);
         primaryStage.toFront();
+    }
+
+    public void onConfigAction(ActionEvent actionEvent) {
+
+    }
+
+    public void onReloadAction(ActionEvent actionEvent) {
+
     }
 }

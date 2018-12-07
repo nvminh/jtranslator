@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    MainController mainController;
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         Parent root = loader.load();
-        MainController mainController = loader.getController();
+        mainController = loader.getController();
         mainController.setStage(primaryStage);
         primaryStage.setTitle("Translator");
         primaryStage.setScene(new Scene(root, 850, 550));
@@ -38,12 +39,12 @@ public class Main extends Application {
 
     private void translate(Stage primaryStage, String string) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-            Parent root = loader.load();
-            MainController mainController = loader.getController();
-            mainController.setStage(primaryStage);
-            primaryStage.setTitle("Translator");
-            //primaryStage.setScene(new Scene(root, 850, 550));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+//            Parent root = loader.load();
+//            MainController mainController = loader.getController();
+//            mainController.setStage(primaryStage);
+//            primaryStage.setTitle("Translator");
+//            //primaryStage.setScene(new Scene(root, 850, 550));
             primaryStage.show();
             mainController.translate(string);
         }catch (Exception ex) {
