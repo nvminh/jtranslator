@@ -1,10 +1,12 @@
-package sample;
+package com.jtranslator;
 
 import com.sun.webkit.dom.HTMLElementImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.web.WebView;
@@ -19,6 +21,7 @@ import javax.xml.xpath.XPathFactory;
 import java.io.FileInputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -27,7 +30,6 @@ public class MainController implements Initializable {
     public TextField textField;
     public Button configButton;
     private Stage primaryStage;
-    Properties properties;
 
     public void onKeyPressed(KeyEvent keyEvent) {
         if(keyEvent.getCode() == KeyCode.ENTER) {
@@ -39,7 +41,7 @@ public class MainController implements Initializable {
 
     private String getUrl() {
         //return "https://dict.laban.vn/find?type=1&query=" + URLEncoder.encode(textField.getText());
-        return "https://translate.google.com/#auto/vi/" + URLEncoder.encode(textField.getText());
+        return Config.ONLINE_DICT_URL.get() + URLEncoder.encode(textField.getText());
     }
 
     @Override
@@ -47,11 +49,29 @@ public class MainController implements Initializable {
         webContent.getEngine().getLoadWorker().progressProperty().addListener(
                 (o, old, progress) -> updateFields(progress));
 
-        loadConfig();
+        if(Config.ONLINE_DICT_URL.get() == null || Config.ONLINE_DICT_URL.get().trim().length() == 0) {
+            Config.ONLINE_DICT_URL.set(Config.GOOGLE_TRANSLATOR.get());
+        }
     }
 
-    private void loadConfig() {
-        properties.load(new FileInputStream(""));
+    public Optional<String> input(String title, String header, String context, String defaultText) {
+        TextInputDialog alert = new TextInputDialog(defaultText);
+        alert.setWidth(500);
+        setTexts(alert, title, header, context);
+
+        return alert.showAndWait();
+    }
+
+    private void setTexts(Dialog alert, String title, String header, String context) {
+        if (title != null) {
+            alert.setTitle(title);
+        }
+        if (header != null) {
+            alert.setHeaderText(header);
+        }
+        if (context != null) {
+            alert.setContentText(context);
+        }
     }
 
     private void updateFields(Number progress)
@@ -94,7 +114,13 @@ public class MainController implements Initializable {
     }
 
     public void onConfigAction(ActionEvent actionEvent) {
-
+        Optional<String> input = input("Config", "", "Set online dictionaty URL: ", Config.ONLINE_DICT_URL.get());
+        if(input.isPresent()) {
+            Config.ONLINE_DICT_URL.set(input.get());
+            if(Config.ONLINE_DICT_URL.get() == null || Config.ONLINE_DICT_URL.get().trim().length() == 0) {
+                Config.ONLINE_DICT_URL.set(Config.GOOGLE_TRANSLATOR.get());
+            }
+        }
     }
 
     public void onReloadAction(ActionEvent actionEvent) {

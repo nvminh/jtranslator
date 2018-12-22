@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jtranslator.MainController">
    <center>
       <WebView fx:id="webContent" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
    <top>
       <FlowPane prefHeight="29.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="textField" prefHeight="29.0" prefWidth="453.0" />
+            <TextField fx:id="textField" prefHeight="29.0" prefWidth="453.0" onKeyPressed="#onKeyPressed" />
             <Button fx:id="configButton" mnemonicParsing="false" onAction="#onConfigAction" text="Config ..." />
             <Button mnemonicParsing="false" text="Reload" onAction="#onReloadAction"/>
          </children>
