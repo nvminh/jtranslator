@@ -1,21 +1,29 @@
 package com.jtranslator;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 public class Main extends Application {
 
     MainController mainController;
+    String preText;
     @Override
     public void start(Stage primaryStage) throws Exception{
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         Parent root = loader.load();
         mainController = loader.getController();
-        mainController.setStage(primaryStage);
+        mainController.setStage(primaryStage, this);
         primaryStage.setTitle("Translator");
         primaryStage.setScene(new Scene(root, 850, 550));
         primaryStage.show();
@@ -35,18 +43,34 @@ public class Main extends Application {
                 }
             }
         };
+
+        ScheduledService<Void> svc = new ScheduledService<Void>() {
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    protected Void call() {
+                        try {
+                            Platform.runLater(()->translate(primaryStage, systemClipboard.getString()));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+//                        translate(primaryStage, systemClipboard.getString());
+                        return null;
+                    }
+                };
+            }
+        };
+        svc.setPeriod(Duration.seconds(1));
+        svc.start();
     }
 
-    private void translate(Stage primaryStage, String string) {
+    private void translate(Stage primaryStage, String text) {
         try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
-//            Parent root = loader.load();
-//            MainController mainController = loader.getController();
-//            mainController.setStage(primaryStage);
-//            primaryStage.setTitle("Translator");
-//            //primaryStage.setScene(new Scene(root, 850, 550));
-            primaryStage.show();
-            mainController.translate(string);
+            if(!Objects.equals(preText, text)) {
+                preText = text;
+                primaryStage.show();
+                primaryStage.toFront();
+                mainController.translate(text);
+            }
         }catch (Exception ex) {
             ex.printStackTrace();
         }

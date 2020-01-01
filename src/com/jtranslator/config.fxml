@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jtranslator.ConfigController">
+   <children>
+      <Label layoutX="24.0" layoutY="23.0" text="Dictionary" />
+      <ComboBox fx:id="selectedDicCombo" onAction="#onSelectedDicComboAction" layoutX="137.0" layoutY="18.0" prefHeight="27.0" prefWidth="435.0" />
+      <Label layoutX="24.0" layoutY="67.0" text="Edit dictionaries" />
+      <ScrollPane layoutX="136.0" layoutY="67.0" prefHeight="255.0" prefWidth="435.0">
+         <content>
+            <TextArea fx:id="dictionariesText" prefHeight="251.0" prefWidth="432.0" />
+         </content></ScrollPane>
+      <Button onAction="#onSaveAction" layoutX="385.0" layoutY="345.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Save" />
+      <Button onAction="#onResetAction" layoutX="489.0" layoutY="345.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Reset" />
+
+   </children>
+</AnchorPane>

@@ -4,7 +4,11 @@ import java.util.prefs.Preferences;
 
 public enum  Config {
     GOOGLE_TRANSLATOR("https://translate.google.com/#auto/vi/"),
-    ONLINE_DICT_URL;
+    HND_DIC("https://www.informatik.uni-leipzig.de/~duc/TD/td/index.php?db=ev&word="),
+
+
+    ONLINE_DICT_URLS,
+    SELECTED_DICT_URL;
 
     private Config() {
 
