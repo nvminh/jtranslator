@@ -1,4 +1,4 @@
-package com.jtranslator;
+package com.nvm.onlinetranslator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -13,14 +13,14 @@ import javafx.util.Duration;
 
 import java.util.Objects;
 
-public class Main extends Application {
+public class Main extends Application  {
 
     MainController mainController;
     String preText;
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Parent root = loader.load();
         mainController = loader.getController();
         mainController.setStage(primaryStage, this);

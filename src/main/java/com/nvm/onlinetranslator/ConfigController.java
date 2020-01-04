@@ -1,9 +1,11 @@
-package com.jtranslator;
+package com.nvm.onlinetranslator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,9 +13,12 @@ import java.util.ResourceBundle;
 public class ConfigController implements Initializable {
     public ComboBox selectedDicCombo;
     public TextArea dictionariesText;
+    public Button closeButton;
 
     public void onSelectedDicComboAction(ActionEvent actionEvent) {
-        Config.SELECTED_DICT_URL.set(selectedDicCombo.getValue().toString());
+        if(selectedDicCombo.getValue() != null) {
+            Config.SELECTED_DICT_URL.set(selectedDicCombo.getValue().toString());
+        }
     }
 
     public void onSaveAction(ActionEvent actionEvent) {
@@ -42,11 +47,20 @@ public class ConfigController implements Initializable {
     }
 
     private void initCombo() {
-        String[] lines = dictionariesText.getText().split("[\\r\\n]+");
-        selectedDicCombo.getItems().clear();
-        for(String line : lines) {
-            selectedDicCombo.getItems().add(line);
+        try {
+            String[] lines = dictionariesText.getText().split("[\\r\\n]+");
+            selectedDicCombo.getSelectionModel().clearSelection();
+            selectedDicCombo.getItems().clear();
+            for (String line : lines) {
+                selectedDicCombo.getItems().add(line);
+            }
+            selectedDicCombo.setValue(Config.SELECTED_DICT_URL.get());
+        }catch (Exception ex) {
+            ex.printStackTrace();
         }
-        selectedDicCombo.setValue(Config.SELECTED_DICT_URL.get());
+    }
+
+    public void onCloseAction(ActionEvent actionEvent) {
+        ((Stage)closeButton.getScene().getWindow()).close();
     }
 }

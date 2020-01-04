@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nvm.onlinetranslator.ConfigController">
+   <children>
+      <Label layoutX="24.0" layoutY="23.0" text="Selected URL" />
+      <ComboBox fx:id="selectedDicCombo" layoutX="137.0" layoutY="18.0" onAction="#onSelectedDicComboAction" prefHeight="27.0" prefWidth="435.0" />
+      <Label layoutX="24.0" layoutY="67.0" text="Translation URLs" />
+      <ScrollPane layoutX="136.0" layoutY="67.0" prefHeight="255.0" prefWidth="435.0">
+         <content>
+            <TextArea fx:id="dictionariesText" prefHeight="251.0" prefWidth="432.0" />
+         </content></ScrollPane>
+      <Button layoutX="361.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSaveAction" prefHeight="27.0" prefWidth="101.0" text="Reload URLs" />
+      <Button layoutX="489.0" layoutY="345.0" mnemonicParsing="false" onAction="#onResetAction" prefHeight="27.0" prefWidth="77.0" text="Reset" />
+      <Button fx:id="closeButton" onAction="#onCloseAction" layoutX="137.0" layoutY="345.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Close" />
+
+   </children>
+</AnchorPane>

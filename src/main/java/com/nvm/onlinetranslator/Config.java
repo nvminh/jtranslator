@@ -1,4 +1,4 @@
-package com.jtranslator;
+package com.nvm.onlinetranslator;
 
 import java.util.prefs.Preferences;
 
